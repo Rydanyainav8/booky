@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 #[ApiResource]
@@ -17,6 +18,7 @@ class Review
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(min: 0, max: 5)]
     private ?int $rating = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -28,7 +30,7 @@ class Review
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $publicationDate = null;
 
-    #[ORM\ManyToOne(inversedBy: 'review')]
+    #[ORM\ManyToOne(inversedBy: 'reviews')]
     private ?Book $book = null;
 
     public function getId(): ?int

@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\BookRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,17 +27,6 @@ class Book
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $publicationDate = null;
-
-    /**
-     * @var Collection<int, review>
-     */
-    #[ORM\OneToMany(targetEntity: review::class, mappedBy: 'book')]
-    private Collection $review;
-
-    public function __construct()
-    {
-        $this->review = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -90,36 +77,6 @@ class Book
     public function setPublicationDate(\DateTimeInterface $publicationDate): static
     {
         $this->publicationDate = $publicationDate;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, review>
-     */
-    public function getReview(): Collection
-    {
-        return $this->review;
-    }
-
-    public function addReview(review $review): static
-    {
-        if (!$this->review->contains($review)) {
-            $this->review->add($review);
-            $review->setBook($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReview(review $review): static
-    {
-        if ($this->review->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getBook() === $this) {
-                $review->setBook(null);
-            }
-        }
 
         return $this;
     }
