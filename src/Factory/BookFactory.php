@@ -32,9 +32,9 @@ final class BookFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'author' => self::faker()->text(255),
+            'author' => self::faker()->name(),
             'publicationDate' => self::faker()->dateTime(),
-            'title' => self::faker()->text(255),
+            'title' => self::faker()->title(),
             'description' => self::faker()->text(),
         ];
     }

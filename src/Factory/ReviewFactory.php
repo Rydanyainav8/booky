@@ -33,7 +33,7 @@ final class ReviewFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'auhtor' => self::faker()->text(255),
+            'auhtor' => self::faker()->name(),
             'publicationDate' => self::faker()->dateTime(),
             'body' => self::faker()->text(),
             'book' => lazy(fn() => BookFactory::randomOrCreate()),
